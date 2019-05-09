@@ -8,7 +8,7 @@ Here you have two options. Either you have a clone of the [HAL repository](https
 
 To use the main HAL build scripts, you first need a clone of HAL and clone the plugin into the plugins folder:
 
-```
+```bash
 git clone https://github.com/emsec/hal.git
 cd hal/plugins
 git clone https://github.com/emsec/hal-netlist-statistics.git
@@ -16,7 +16,7 @@ git clone https://github.com/emsec/hal-netlist-statistics.git
 
 Then you can rerun cmake in your build directory and build the plugin:
 
-```
+```bash
 cd ../build/
 cmake .. -G Ninja
 ninja netlist_statistics
@@ -26,7 +26,7 @@ ninja netlist_statistics
 
 You can also use a precompiled version of HAL to build the plugin. Here you need to clone the plugin and have the current version of HAL installed on your system. On Ubuntu you can for example use our [ppa:sebastian-wallat/hal](ppa:sebastian-wallat/hal).
 
-```
+```bash
 git clone https://github.com/emsec/hal-netlist-statistics.git
 mkdir -p hal-netlist-statistics/build
 cd hal-netlist-statistics/build
@@ -39,7 +39,7 @@ As we currently not use the System libraries of pybind11 and spdlog, we included
 
 The plugin can also be installed. Here you should set the `CMAKE_INSTALL_PREFIX` during cmake run:
 
-```
+```bash
 cd build
 rm -rf *
 cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr/
@@ -56,7 +56,7 @@ hal -i examples/fsm.v --netlist_statistics
 
 It produces following output:
 
-```
+```bash
 ...
 [core] [info] executing 'netlist_statistics' with
 [core] [info]   '--netlist_statistics':
@@ -101,7 +101,7 @@ It produces following output:
 
 Alternatively you can use the python interface:
 
-```
+```bash
 $ hal --python
 [09.05.2019 09:38:50] [core] [info] Starting hal_python.
 Python 3.7.3 (default, Mar 27 2019, 09:23:15)
