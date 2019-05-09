@@ -1,12 +1,12 @@
 # Netlist Statistics Plugin
 
-This is the example plugin explained in [the corresponding Wiki article](https://github.com/emsec/hal/wiki/How-to-create-your-first-HAL-Cpp-plugin). Here we briefly explain how to build and use it.
+In this repository, you find the example plugin which we also explained in [the corresponding Wiki article](https://github.com/emsec/hal/wiki/How-to-create-your-first-HAL-Cpp-plugin). Here we briefly explain how to build and use it.
 
 Here you have two options. Either you have a clone of the [HAL repository](https://github.com/emsec/hal) and build the plugin from within the plugin directory, or you have HAL installed on your system and build and link against it.
 
 ## Building the Plugin in Source
 
-To use the main HAL build scripts you first need a clone of HAL and clone the plugin into the plugins folder:
+To use the main HAL build scripts, you first need a clone of HAL and clone the plugin into the plugins folder:
 
 ```
 git clone https://github.com/emsec/hal.git
@@ -24,7 +24,7 @@ ninja netlist_statistics
 
 ## Building the Plugin with an installed version of HAL
 
-You can also use a precompiled version of HAL to build the plugin. Here you just need to clone the plugin and have the current version of HAL installed on your system. On Ubuntu you can for example use our [ppa:sebastian-wallat/hal](ppa:sebastian-wallat/hal).
+You can also use a precompiled version of HAL to build the plugin. Here you need to clone the plugin and have the current version of HAL installed on your system. On Ubuntu you can for example use our [ppa:sebastian-wallat/hal](ppa:sebastian-wallat/hal).
 
 ```
 git clone https://github.com/emsec/hal-netlist-statistics.git
@@ -48,7 +48,7 @@ sudo ninja install
 
 ## Using the plugin
 
-After compile and optional install the plugin can be used from the command line via the `--netlist_statistics` parameter. You can use the example file `examples/fsm.v` file in the main repository to test the plugin:
+After compile and optionally install the plugin is used from the command line via the `--netlist_statistics` parameter. You can use the example file `examples/fsm.v` file in the main repository to test the plugin:
 
 ```
 hal -i examples/fsm.v --netlist_statistics
