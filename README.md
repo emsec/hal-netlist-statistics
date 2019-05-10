@@ -62,26 +62,26 @@ It produces following output:
 [core] [info]   '--netlist_statistics':
 [netlist_statistics] [info] netlist_statistics executed
 [netlist_statistics] [info] 1 : CLK_BUF_BUF_inst_inst (BUF
-2 : CLK_BUF_inst_inst (BUF
-3 : FSM_sequential_STATE_REG_0_i_2_inst (LUT6
-4 : FSM_sequential_STATE_REG_0_i_3_inst (LUT6
-5 : FSM_sequential_STATE_REG_1_i_2_inst (LUT6
-6 : FSM_sequential_STATE_REG_1_i_3_inst (LUT6
-7 : FSM_sequential_STATE_REG_reg_0_inst (FFR
-8 : FSM_sequential_STATE_REG_reg_0_i_1_inst (MUX
-9 : FSM_sequential_STATE_REG_reg_1_inst (FFR
-10 : GND_inst (GND
-11 : FSM_sequential_STATE_REG_reg_1_i_1_inst (MUX
-12 : INPUT_BUF_0_inst_inst (BUF
-13 : INPUT_BUF_1_inst_inst (BUF
-14 : INPUT_BUF_2_inst_inst (BUF
-15 : INPUT_BUF_3_inst_inst (BUF
-16 : INPUT_BUF_4_inst_inst (BUF
-17 : OUTPUT_BUF_0_inst_inst (BUF
-18 : OUTPUT_BUF_0_inst_i_1_inst (LUT1
-19 : OUTPUT_BUF_1_inst_inst (BUF
-20 : OUTPUT_BUF_1_inst_i_1_inst (LUT2
-21 : VCC_inst (VCC
+2 : CLK_BUF_inst_inst (BUF)
+3 : FSM_sequential_STATE_REG_0_i_2_inst (LUT6)
+4 : FSM_sequential_STATE_REG_0_i_3_inst (LUT6)
+5 : FSM_sequential_STATE_REG_1_i_2_inst (LUT6)
+6 : FSM_sequential_STATE_REG_1_i_3_inst (LUT6)
+7 : FSM_sequential_STATE_REG_reg_0_inst (FFR)
+8 : FSM_sequential_STATE_REG_reg_0_i_1_inst (MUX)
+9 : FSM_sequential_STATE_REG_reg_1_inst (FFR)
+10 : GND_inst (GND)
+11 : FSM_sequential_STATE_REG_reg_1_i_1_inst (MUX)
+12 : INPUT_BUF_0_inst_inst (BUF)
+13 : INPUT_BUF_1_inst_inst (BUF)
+14 : INPUT_BUF_2_inst_inst (BUF)
+15 : INPUT_BUF_3_inst_inst (BUF)
+16 : INPUT_BUF_4_inst_inst (BUF)
+17 : OUTPUT_BUF_0_inst_inst (BUF)
+18 : OUTPUT_BUF_0_inst_i_1_inst (LUT1)
+19 : OUTPUT_BUF_1_inst_inst (BUF)
+20 : OUTPUT_BUF_1_inst_i_1_inst (LUT2)
+21 : VCC_inst (VCC)
 ##########
 [BUF] = 9
 [FFR] = 2
@@ -91,6 +91,7 @@ It produces following output:
 [LUT6] = 4
 [MUX] = 2
 [VCC] = 1
+##########
 
 [netlist.persistent] [info] serialized netlist in 0.00 seconds
 [core] [info] unloaded all 1 plugins
@@ -112,27 +113,27 @@ Type "help", "copyright", "credits" or "license" for more information.
 [09.05.2019 09:38:51] [hdl_parser] [info] parsed 'examples/fsm.v' in 0.00 seconds.
 >>> from hal_plugins.libnetlist_statistics import netlist_statistics
 >>> print(netlist_statistics.get_statistics(n))
-1 : CLK_BUF_BUF_inst_inst (BUF
-2 : CLK_BUF_inst_inst (BUF
-3 : FSM_sequential_STATE_REG_0_i_2_inst (LUT6
-4 : FSM_sequential_STATE_REG_0_i_3_inst (LUT6
-5 : FSM_sequential_STATE_REG_1_i_2_inst (LUT6
-6 : FSM_sequential_STATE_REG_1_i_3_inst (LUT6
-7 : FSM_sequential_STATE_REG_reg_0_inst (FFR
-8 : FSM_sequential_STATE_REG_reg_0_i_1_inst (MUX
-9 : FSM_sequential_STATE_REG_reg_1_inst (FFR
-10 : GND_inst (GND
-11 : FSM_sequential_STATE_REG_reg_1_i_1_inst (MUX
-12 : INPUT_BUF_0_inst_inst (BUF
-13 : INPUT_BUF_1_inst_inst (BUF
-14 : INPUT_BUF_2_inst_inst (BUF
-15 : INPUT_BUF_3_inst_inst (BUF
-16 : INPUT_BUF_4_inst_inst (BUF
-17 : OUTPUT_BUF_0_inst_inst (BUF
-18 : OUTPUT_BUF_0_inst_i_1_inst (LUT1
-19 : OUTPUT_BUF_1_inst_inst (BUF
-20 : OUTPUT_BUF_1_inst_i_1_inst (LUT2
-21 : VCC_inst (VCC
+1 : CLK_BUF_BUF_inst_inst (BUF)
+2 : CLK_BUF_inst_inst (BUF)
+3 : FSM_sequential_STATE_REG_0_i_2_inst (LUT6)
+4 : FSM_sequential_STATE_REG_0_i_3_inst (LUT6)
+5 : FSM_sequential_STATE_REG_1_i_2_inst (LUT6)
+6 : FSM_sequential_STATE_REG_1_i_3_inst (LUT6)
+7 : FSM_sequential_STATE_REG_reg_0_inst (FFR)
+8 : FSM_sequential_STATE_REG_reg_0_i_1_inst (MUX)
+9 : FSM_sequential_STATE_REG_reg_1_inst (FFR)
+10 : GND_inst (GND)
+11 : FSM_sequential_STATE_REG_reg_1_i_1_inst (MUX)
+12 : INPUT_BUF_0_inst_inst (BUF)
+13 : INPUT_BUF_1_inst_inst (BUF)
+14 : INPUT_BUF_2_inst_inst (BUF)
+15 : INPUT_BUF_3_inst_inst (BUF)
+16 : INPUT_BUF_4_inst_inst (BUF)
+17 : OUTPUT_BUF_0_inst_inst (BUF)
+18 : OUTPUT_BUF_0_inst_i_1_inst (LUT1)
+19 : OUTPUT_BUF_1_inst_inst (BUF)
+20 : OUTPUT_BUF_1_inst_i_1_inst (LUT2)
+21 : VCC_inst (VCC)
 ##########
 [BUF] = 9
 [FFR] = 2
@@ -142,6 +143,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 [LUT6] = 4
 [MUX] = 2
 [VCC] = 1
+##########
 
 >>>
 ```

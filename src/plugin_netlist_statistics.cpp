@@ -50,12 +50,12 @@ std::string plugin_netlist_statistics::get_statistics(std::shared_ptr<netlist> n
     }
 
     for (const auto& it : ordered_gates)
-        stream << it.second->get_id() << " : " << it.second->get_name() << " (" << it.second->get_type() << std::endl;
+        stream << it.second->get_id() << " : " << it.second->get_name() << " (" << it.second->get_type() << ")" << std::endl;
 
     stream << "##########" << std::endl;
     for (const auto& it : type_cnt)
         stream << "[" << it.first << "] = " << it.second << std::endl;
-
+    stream << "##########" << std::endl;
     return stream.str();
 }
 
