@@ -1,5 +1,4 @@
 #include "core/log.h"
-#include "core/i_base.h"
 #include "core/utils.h"
 #include "netlist/gate.h"
 #include "netlist/net.h"
@@ -24,7 +23,6 @@ PYBIND11_MODULE(libnetlist_statistics, m)
 #endif    // ifdef PYBIND11_MODULE
 
     py::implicitly_convertible<std::string, hal::path>();
-    py::class_<i_cli, std::shared_ptr<i_cli>, Pyi_cli>(m, "i_cli").def("exec", &i_cli::get_cli_options).def("handle_cli_call", &i_cli::handle_cli_call, py::arg("netlist"), py::arg("args"));
     py::class_<plugin_netlist_statistics, std::shared_ptr<plugin_netlist_statistics>, i_base>(m, "netlist_statistics")
         .def(py::init<>())
         .def_property_readonly("name", &plugin_netlist_statistics::get_name)
