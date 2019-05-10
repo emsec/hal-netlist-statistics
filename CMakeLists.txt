@@ -131,12 +131,13 @@ if(HAL_NL_STATISTICS_MASTER_PROJECT)
     include_directories(${include_directories} "${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog/include")
 endif()
 
-
+# Define the option to enable or disable the build of this plugin by a cmake flag.
 option(PL_NETLIST_STATISTICS "PL_NETLIST_STATISTICS" ON)
 if(PL_NETLIST_STATISTICS OR BUILD_ALL_PLUGINS)
+    # Add the include directory to the include search path
     include_directories(AFTER "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-
+    # Define the Header and sources files
     set(netlist_statistics_INC
         ${CMAKE_CURRENT_SOURCE_DIR}/include/factory_netlist_statistics.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/plugin_netlist_statistics.h
@@ -148,18 +149,31 @@ if(PL_NETLIST_STATISTICS OR BUILD_ALL_PLUGINS)
         ${CMAKE_CURRENT_SOURCE_DIR}/python/python_definitions.cpp
         )
 
+    # Create the '__init__.py' file in the hal_plugins directory as there might not be a any plugins available yet.
     file(WRITE ${CMAKE_BINARY_DIR}/lib/hal_plugins/__init__.py "")
 
+    # Create the plugin
     add_library(netlist_statistics SHARED ${netlist_statistics_SRC} ${netlist_statistics_INC})
+
+    # To allow shared libraries to be loaded by python on macOS you need to path the suffix of the lib file.
     if(APPLE AND CMAKE_HOST_APPLE)
         set_target_properties(netlist_statistics PROPERTIES SUFFIX ".so")
     endif(APPLE AND CMAKE_HOST_APPLE)
+
+    # Link the plugin against the pybind11 and python libraries as well as the HAL libraries.
     target_link_libraries(netlist_statistics ${PYTHON_LIBRARIES} pybind11::pybind11 ${LINK_LIBS})
+
+    # Install the library to the appropriate directories
     install(TARGETS netlist_statistics LIBRARY DESTINATION ${PLUGIN_LIBRARY_INSTALL_DIRECTORY} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE INCLUDES DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY})
+
+    # Install the library header to the appropriate directories
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY}/netlist_statistics/)
+
+    # Add sanitizers if you build in Debug mode
     if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
         add_sanitizers(netlist_statistics)
     endif()
 
+    # Make sure the plugin is build while running e.g. 'make all'.
     add_dependencies(netlist_statistics ${CMAKE_PROJECT_NAME} ${PYTHON_BINDING_LIB})
 endif()
