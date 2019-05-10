@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef __HAL_PLUGIN_MY_FANCY_NEW_PLUGIN_H
-#define __HAL_PLUGIN_MY_FANCY_NEW_PLUGIN_H
+#ifndef __HAL_PLUGIN_NETLIST_STATISTICS_H
+#define __HAL_PLUGIN_NETLIST_STATISTICS_H
 
 #include "core/interface_cli.h"
 #include "def.h"
@@ -57,4 +57,4 @@ public:
     static std::string get_statistics(std::shared_ptr<netlist> n);
 };
 
-#endif //__HAL_PLUGIN_MY_FANCY_NEW_PLUGIN_H
+#endif //__HAL_PLUGIN_NETLIST_STATISTICS_H
