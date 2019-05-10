@@ -50,13 +50,13 @@ sudo ninja install
 
 After compile and optionally install the plugin is used from the command line via the `--netlist_statistics` parameter. You can use the example file `examples/fsm.v` file in the main repository to test the plugin:
 
-```
+```bash
 hal -i examples/fsm.v --netlist_statistics
 ```
 
 It produces following output:
 
-```bash
+```
 ...
 [core] [info] executing 'netlist_statistics' with
 [core] [info]   '--netlist_statistics':
@@ -101,7 +101,7 @@ It produces following output:
 
 Alternatively you can use the python interface:
 
-```bash
+```
 $ hal --python
 [09.05.2019 09:38:50] [core] [info] Starting hal_python.
 Python 3.7.3 (default, Mar 27 2019, 09:23:15)
@@ -145,3 +145,5 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 >>>
 ```
+
+
