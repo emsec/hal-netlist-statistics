@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef __HAL_FACTORY_MY_FANCY_NEW_PLUGIN_H
-#define __HAL_FACTORY_MY_FANCY_NEW_PLUGIN_H
+#ifndef __HAL_FACTORY_NETLIST_STATISTICS_H
+#define __HAL_FACTORY_NETLIST_STATISTICS_H
 
 #include "core/interface_factory.h"
 
@@ -36,4 +36,4 @@ public:
 
 EXPORT i_factory* get_factory();
 
-#endif //__HAL_FACTORY_MY_FANCY_NEW_PLUGIN_H
+#endif //__HAL_FACTORY_NETLIST_STATISTICS_H
