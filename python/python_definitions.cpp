@@ -14,13 +14,13 @@
 namespace py = pybind11;
 
 #ifdef PYBIND11_MODULE
-PYBIND11_MODULE(netlist_statistics, m)
+PYBIND11_MODULE(libnetlist_statistics, m)
 {
     m.doc() = "hal netlist_statistics python bindings";
 #else
-    PYBIND11_PLUGIN(netlist_statistics)
+    PYBIND11_PLUGIN(libnetlist_statistics)
 {
-    py::module m("netlist_statistics", "hal netlist_statistics python bindings");
+    py::module m("libnetlist_statistics", "hal netlist_statistics python bindings");
 #endif    // ifdef PYBIND11_MODULE
 
     py::implicitly_convertible<std::string, hal::path>();
