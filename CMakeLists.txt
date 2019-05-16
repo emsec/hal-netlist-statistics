@@ -113,16 +113,16 @@ if(HAL_NL_STATISTICS_MASTER_PROJECT)
     option(BUILD_ALL_PLUGINS "BUILD_ALL_PLUGINS" OFF)
 
     find_package(Hal REQUIRED)
+    set(LINK_LIBS ${HAL_LIBRARIES})
+    include_directories(${Hal_INCLUDE_DIR}/hal SYSTEM ${PYBIND11_INCLUDE_DIR})
+    message(STATUS "Hal_INCLUDE_DIR: ${Hal_INCLUDE_DIR}")
+
     # Need Version 2.2.4 Not available in ubuntu bionic
     #find_package(pybind11 CONFIG REQUIRED)
     #message(STATUS "Found pybind11 v${pybind11_VERSION}: ${pybind11_INCLUDE_DIRS}")
     #include_directories(pybind11_INCLIDE_DIRS)
     # Quick fix
     add_subdirectory(deps/pybind11)
-
-    set(LINK_LIBS ${HAL_LIBRARIES})
-    include_directories(${Hal_INCLUDE_DIR}/hal SYSTEM ${PYBIND11_INCLUDE_DIR})
-    message(STATUS "Hal_INCLUDE_DIR: ${Hal_INCLUDE_DIR}")
 
     # Spdlog Version 0.16 error in ubuntu bionic
     #find_package(spdlog CONFIG REQUIRED)
