@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
-if (POLICY CMP0048)
-  # cmake warns if loaded from a min-3.0-required parent dir, so silence the warning:
-  cmake_policy(SET CMP0048 NEW)
+if(POLICY CMP0048)
+    # cmake warns if loaded from a min-3.0-required parent dir, so silence the warning:
+    cmake_policy(SET CMP0048 NEW)
 endif()
 
 message(STATUS "cmake version: ${CMAKE_VERSION}")
@@ -20,8 +20,8 @@ project(netlist_statistics)
 
 # Check if pybind11 is being used directly or via add_subdirectory
 set(HAL_NL_STATISTICS_MASTER_PROJECT OFF)
-if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-  set(HAL_NL_STATISTICS_MASTER_PROJECT ON)
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(HAL_NL_STATISTICS_MASTER_PROJECT ON)
 endif()
 
 if(HAL_NL_STATISTICS_MASTER_PROJECT)
@@ -158,6 +158,9 @@ if(PL_NETLIST_STATISTICS OR BUILD_ALL_PLUGINS)
     # To allow shared libraries to be loaded by python on macOS you need to path the suffix of the lib file.
     if(APPLE AND CMAKE_HOST_APPLE)
         set_target_properties(netlist_statistics PROPERTIES SUFFIX ".so")
+        set_target_properties(graph_algorithm PROPERTIES
+                              INSTALL_NAME_DIR ${PLUGIN_LIBRARY_INSTALL_DIRECTORY}
+                              )
     endif(APPLE AND CMAKE_HOST_APPLE)
 
     # Link the plugin against the pybind11 and python libraries as well as the HAL libraries.
