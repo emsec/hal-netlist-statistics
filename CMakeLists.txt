@@ -118,17 +118,25 @@ if(HAL_NL_STATISTICS_MASTER_PROJECT)
     message(STATUS "Hal_INCLUDE_DIR: ${Hal_INCLUDE_DIR}")
 
     # Need Version 2.2.4 Not available in ubuntu bionic
-    #find_package(pybind11 CONFIG REQUIRED)
-    #message(STATUS "Found pybind11 v${pybind11_VERSION}: ${pybind11_INCLUDE_DIRS}")
-    #include_directories(pybind11_INCLIDE_DIRS)
-    # Quick fix
-    add_subdirectory(deps/pybind11)
+    find_package(pybind11 CONFIG)
+    message(STATUS "Found pybind11 v${pybind11_VERSION}: ${pybind11_INCLUDE_DIRS}")
+    if(${pybind11_VERSION} VERSION_GREATER_EQUAL 2.2.4)
+        message(STATUS "Found pybind11 >= 2.2.4")
+        include_directories(pybind11_INCLIDE_DIRS)
+    else()
+        message(STATUS "Found pybind11 < 2.2.4")
+        add_subdirectory(deps/pybind11)
+    endif()
 
-    # Spdlog Version 0.16 error in ubuntu bionic
-    #find_package(spdlog CONFIG REQUIRED)
-    #message(STATUS "Found spdlog v${spdlog_VERSION}: ${spdlog_INCLUDEDIR}")
-    # Quick fix
-    include_directories(${include_directories} "${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog/include")
+    find_package(spdlog CONFIG)
+    message(STATUS "Found spdlog v${spdlog_VERSION}")
+    if(${spdlog_VERSION} VERSION_LESS 1.3.1)
+        message(STATUS "Found spdlog < 1.3.1")
+        include_directories(${include_directories} "${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog-1.3.1/include")
+        set(spdlog_VERSION 1.3.1)
+    else()
+        message(STATUS "Found spdlog >= 1.3.1")
+    endif()
 endif()
 
 # Define the option to enable or disable the build of this plugin by a cmake flag.
