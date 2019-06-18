@@ -28,32 +28,32 @@
 #include "core/interface_cli.h"
 #include "def.h"
 
-class plugin_netlist_statistics : virtual public i_cli
+class PLUGIN_API plugin_netlist_statistics : virtual public i_cli
 {
 public:
     plugin_netlist_statistics() = default;
-    
+
     ~plugin_netlist_statistics() override = default;
-    
+
     /*
      *      interface implementations
      */
-    
+
     /** interface implementation: i_base */
     std::string get_name() override;
-    
+
     /** interface implementation: i_base */
     std::string get_version() override;
-    
+
     /** interface implementation: i_base */
     std::set<interface_type> get_type() override;
-    
+
     /** interface implementation: i_cli */
     program_options get_cli_options() override;
-    
+
     /** interface implementation: i_cli */
     bool handle_cli_call(std::shared_ptr<netlist> n, program_arguments& args) override;
-    
+
     static std::string get_statistics(std::shared_ptr<netlist> n);
 };
 

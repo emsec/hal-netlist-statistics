@@ -27,13 +27,13 @@
 
 #include "core/interface_factory.h"
 
-class factory_netlist_statistics : public i_factory
+class PLUGIN_API factory_netlist_statistics : public i_factory
 {
 public:
     /** interface implementation: i_factory */
     std::shared_ptr<i_base> get_plugin_instance() override;
 };
 
-EXPORT i_factory* get_factory();
+extern "C" PLUGIN_API i_factory* get_factory();
 
 #endif //__HAL_FACTORY_NETLIST_STATISTICS_H
