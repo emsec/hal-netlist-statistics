@@ -25,11 +25,13 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 if(HAL_NL_STATISTICS_MASTER_PROJECT)
+    find_package(hal REQUIRED)
+    include(hal_cmake_tools)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-    include(Subdirs)
+    # include(Subdirs)
     option(USE_VERSION_FROM_OPTION "USE_VERSION_FROM_OPTION" FALSE)
-    include(HalPluginsUtils)
-    include(DetectDistro)
+    # include(HalPluginsUtils)
+    # include(DetectDistro)
     if(NOT ${USE_VERSION_FROM_OPTION})
         hal_plugins_get_version()
     else()
@@ -112,31 +114,35 @@ if(HAL_NL_STATISTICS_MASTER_PROJECT)
 
     option(BUILD_ALL_PLUGINS "BUILD_ALL_PLUGINS" OFF)
 
-    find_package(Hal REQUIRED)
+    
     set(LINK_LIBS ${HAL_LIBRARIES})
     include_directories(${Hal_INCLUDE_DIR}/hal SYSTEM ${PYBIND11_INCLUDE_DIR})
     message(STATUS "Hal_INCLUDE_DIR: ${Hal_INCLUDE_DIR}")
 
     # Need Version 2.2.4 Not available in ubuntu bionic
-    find_package(pybind11 2.2.4 CONFIG)
+    find_package(pybind11 2.4.3 CONFIG)
     if(${pybind11_FOUND})
-        message(STATUS "Found pybind11 v${pybind11_VERSION}: ${pybind11_INCLUDE_DIRS}")
-        message(STATUS "Found pybind11 >= 2.2.4")
-        include_directories(pybind11_INCLIDE_DIRS)
+        message(VERBOSE "Found pybind11 v${pybind11_VERSION}: ${pybind11_INCLUDE_DIRS}")
+        message(VERBOSE "Found pybind11 >= 2.4.3")
     else()
-        message(STATUS "Found pybind11 >= 2.2.4 not found")
+        message(STATUS "pybind11 >= 2.4.3 not found")
         add_subdirectory(deps/pybind11)
     endif()
 
-    find_package(spdlog 1.3.1 CONFIG)
-    message(STATUS "Found spdlog v${spdlog_VERSION}")
+    find_package(spdlog 1.4.2 EXACT CONFIG)
     if(${spdlog_FOUND})
-        message(STATUS "Found spdlog >= 1.3.1")
+        message(VERBOSE "Found spdlog >= 1.4.2")
     else()
-        message(STATUS "Found spdlog >= 1.3.1 not found")
-        include_directories(${include_directories} "${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog-1.3.1/include")
-        set(spdlog_VERSION 1.3.1)
+        message(STATUS "spdlog >= 1.4.2 not found")
+        #    include_directories(${include_directories} "${CMAKE_CURRENT_SOURCE_DIR}/deps/spdlog-1.4.2/include")
+        set(spdlog_VERSION 1.4.2)
+        add_library(spdlog::spdlog INTERFACE IMPORTED)
+        set_target_properties(spdlog::spdlog PROPERTIES
+                            INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/deps/spdlog-1.4.2/include"
+                            )
     endif()
+
+    find_package(Filesystem REQUIRED Final Experimental)
 endif()
 
 # Define the option to enable or disable the build of this plugin by a cmake flag.
@@ -160,31 +166,36 @@ if(PL_NETLIST_STATISTICS OR BUILD_ALL_PLUGINS)
     # Create the '__init__.py' file in the hal_plugins directory as there might not be a any plugins available yet.
     file(WRITE ${CMAKE_BINARY_DIR}/lib/hal_plugins/__init__.py "")
 
-    # Create the plugin
-    add_library(netlist_statistics SHARED ${netlist_statistics_SRC} ${netlist_statistics_INC})
+    hal_add_plugin(netlist_statistics
+                   SHARED
+                   SOURCES ${netlist_statistics_SRC}
+                   HEADER ${netlist_statistics_INC})
 
-    # To allow shared libraries to be loaded by python on macOS you need to path the suffix of the lib file.
-    if(APPLE AND CMAKE_HOST_APPLE)
-        set_target_properties(netlist_statistics PROPERTIES SUFFIX ".so")
-        set_target_properties(graph_algorithm PROPERTIES
-                              INSTALL_NAME_DIR ${PLUGIN_LIBRARY_INSTALL_DIRECTORY}
-                              )
-    endif(APPLE AND CMAKE_HOST_APPLE)
+    # # Create the plugin
+    # add_library(netlist_statistics SHARED ${netlist_statistics_SRC} ${netlist_statistics_INC})
 
-    # Link the plugin against the pybind11 and python libraries as well as the HAL libraries.
-    target_link_libraries(netlist_statistics ${PYTHON_LIBRARIES} pybind11::pybind11 ${LINK_LIBS})
+    # # To allow shared libraries to be loaded by python on macOS you need to path the suffix of the lib file.
+    # if(APPLE AND CMAKE_HOST_APPLE)
+    #     set_target_properties(netlist_statistics PROPERTIES SUFFIX ".so")
+    #     set_target_properties(graph_algorithm PROPERTIES
+    #                           INSTALL_NAME_DIR ${PLUGIN_LIBRARY_INSTALL_DIRECTORY}
+    #                           )
+    # endif(APPLE AND CMAKE_HOST_APPLE)
 
-    # Install the library to the appropriate directories
-    install(TARGETS netlist_statistics LIBRARY DESTINATION ${PLUGIN_LIBRARY_INSTALL_DIRECTORY} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE INCLUDES DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY})
+    # # Link the plugin against the pybind11 and python libraries as well as the HAL libraries.
+    # target_link_libraries(netlist_statistics ${PYTHON_LIBRARIES} pybind11::pybind11 ${LINK_LIBS})
 
-    # Install the library header to the appropriate directories
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY}/netlist_statistics/include/)
+    # # Install the library to the appropriate directories
+    # install(TARGETS netlist_statistics LIBRARY DESTINATION ${PLUGIN_LIBRARY_INSTALL_DIRECTORY} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE INCLUDES DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY})
 
-    # Add sanitizers if you build in Debug mode
-    if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-        add_sanitizers(netlist_statistics)
-    endif()
+    # # Install the library header to the appropriate directories
+    # install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION ${PLUGIN_INCLUDE_INSTALL_DIRECTORY}/netlist_statistics/include/)
 
-    # Make sure the plugin is build while running e.g. 'make all'.
-    add_dependencies(netlist_statistics ${CMAKE_PROJECT_NAME} ${PYTHON_BINDING_LIB})
+    # # Add sanitizers if you build in Debug mode
+    # if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    #     add_sanitizers(netlist_statistics)
+    # endif()
+
+    # # Make sure the plugin is build while running e.g. 'make all'.
+    # add_dependencies(netlist_statistics ${CMAKE_PROJECT_NAME} ${PYTHON_BINDING_LIB})
 endif()
