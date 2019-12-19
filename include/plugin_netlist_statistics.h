@@ -40,16 +40,15 @@ public:
      */
 
     /** interface implementation: i_base */
-    std::string get_name() override;
+    std::string get_name() const override;
 
     /** interface implementation: i_base */
-    std::string get_version() override;
+    std::string get_version() const override;
 
-    /** interface implementation: i_base */
-    std::set<interface_type> get_type() override;
+    void initialize() override;
 
     /** interface implementation: i_cli */
-    program_options get_cli_options() override;
+    program_options get_cli_options() const override;
 
     /** interface implementation: i_cli */
     bool handle_cli_call(std::shared_ptr<netlist> n, program_arguments& args) override;

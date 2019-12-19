@@ -4,23 +4,27 @@
 #include "netlist/netlist.h"
 #include <sstream>
 
-std::string plugin_netlist_statistics::get_name()
+extern std::shared_ptr<i_base> get_plugin_instance()
+{
+    return std::make_shared<plugin_netlist_statistics>();
+}
+
+std::string plugin_netlist_statistics::get_name() const
 {
     return std::string("netlist_statistics");
 }
 
-std::string plugin_netlist_statistics::get_version()
+std::string plugin_netlist_statistics::get_version() const
 {
     return std::string("0.1");
 }
 
-std::set<interface_type> plugin_netlist_statistics::get_type()
+void plugin_netlist_statistics::initialize()
 {
-    std::set<interface_type> type = {interface_type::base, interface_type::cli};
-    return type;
+
 }
 
-program_options plugin_netlist_statistics::get_cli_options()
+program_options plugin_netlist_statistics::get_cli_options() const
 {
     program_options description;
     description.add("--netlist_statistics", "executes the netlist_statistics");
@@ -45,7 +49,7 @@ std::string plugin_netlist_statistics::get_statistics(std::shared_ptr<netlist> n
     std::map<u32, std::shared_ptr<gate>> ordered_gates;
     for (const auto& gate : netlist->get_gates())
     {
-        type_cnt[gate->get_type()]++;
+        type_cnt[gate->get_type()->to_string()]++;
         ordered_gates[gate->get_id()] = gate;
     }
 
